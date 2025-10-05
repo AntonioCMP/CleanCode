@@ -1,34 +1,30 @@
 
 import pandas as pd
-import plotly.express as px
 from plotly.utils import PlotlyJSONEncoder
-import json
+from json import dumps
 from prophet import Prophet
-import plotly.graph_objects as go
-import datetime as dt
-from datetime import timedelta
+from plotly.graph_objects import Scatter,Figure
+from datetime import datetime,timedelta,date
 from sklearn.preprocessing import MinMaxScaler
-import numpy as np
-from tensorflow.keras.models import load_model
-import plotly.io as pio
-import pickle
-from dotenv import load_dotenv
+from numpy import append,array,reshape
+from plotly.io import to_json
+from pickle import load
 from nltk.corpus import stopwords
-from nltk.stem.porter import *
+from nltk.stem.porter import PorterStemmer
 from nltk.tokenize import word_tokenize
-import re
-from tensorflow.keras.preprocessing.text import Tokenizer
+from re import sub
+from os import environ
+from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
-import os
 
 #To avoid the annoying warning related to that environ
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-day_today= str(dt.datetime.today())[:10]
+day_today= str(datetime.today())[:10]
 try:
     model = load_model("SA_FinancialNews.h5")
     with open("tokenizer.pickle", "rb") as handle:
-        tokenizer = pickle.load(handle)
+        tokenizer = load(handle)
     print("Modelos de sentimiento cargados correctamente.")
 except Exception as e:
     print(f"Error al cargar los modelos de sentimiento: {e}")
@@ -86,9 +82,9 @@ def genesis():
 def grapher(action,filtered_data):
     #Creation of the plot
 
-    fig= go.Figure()
+    fig= Figure()
 
-    fig.add_trace(go.Scatter(
+    fig.add_trace(Scatter(
         x=filtered_data["FECHA"].to_list(),
         y=filtered_data[action].to_list(),
             mode='lines',
@@ -101,7 +97,7 @@ def grapher(action,filtered_data):
         yaxis_title='PRECIO',
     )
 
-    graph_json = json.dumps(fig, cls=PlotlyJSONEncoder)
+    graph_json = dumps(fig, cls=PlotlyJSONEncoder)
     return graph_json
 
 #Use prophet to predict the values of the business chosen, also makes a plot with the prophet prediction and the original values
@@ -121,18 +117,18 @@ def isaias(dtf,business):
     yhat_lower = forecast['yhat_lower'].tolist()
 
     # Crear gráfico manualmente
-    fig = go.Figure()
+    fig = Figure()
 
     # Datos reales
-    fig.add_trace(go.Scatter(x=chosen['ds'].tolist(), 
+    fig.add_trace(Scatter(x=chosen['ds'].tolist(), 
                              y=chosen['y'].tolist(),
                              mode='markers', name='Datos reales', marker=dict(color='black', size=4)))
 
     # Predicción
-    fig.add_trace(go.Scatter(x=ds, y=yhat, mode='lines', name='Predicción', line=dict(color='blue')))
+    fig.add_trace(Scatter(x=ds, y=yhat, mode='lines', name='Predicción', line=dict(color='blue')))
 
-    fig.add_trace(go.Scatter(x=ds, y=yhat_upper, mode='lines', name='Límite superior', line=dict(dash='dot', color='red')))
-    fig.add_trace(go.Scatter(x=ds, y=yhat_lower, mode='lines', name='Límite inferior', line=dict(dash='dot', color='red')))
+    fig.add_trace(Scatter(x=ds, y=yhat_upper, mode='lines', name='Límite superior', line=dict(dash='dot', color='red')))
+    fig.add_trace(Scatter(x=ds, y=yhat_lower, mode='lines', name='Límite inferior', line=dict(dash='dot', color='red')))
 
     # Ajustar layout
     fig.update_layout(title=f'Predicción para {business}',
@@ -142,7 +138,7 @@ def isaias(dtf,business):
                       width=1400, height=600)
 
     # Serializar
-    graph_json = json.dumps(fig, cls=PlotlyJSONEncoder)
+    graph_json = dumps(fig, cls=PlotlyJSONEncoder)
     return graph_json
 
 #Returns the amount of business that are in the daily dataframe
@@ -159,10 +155,10 @@ def daily_len(dtf):
 #Returns the difference between prizes in the last days depending the amount of data that is available in that business
 def differential(dtf,business):
 
-    dtf["ENTLIN"] = pd.to_datetime(dtf["FECHA"]).dt.date
+    dtf["ENTLIN"] = pd.to_datetime(dtf["FECHA"]).date
 
     wheblue = dtf["EMISOR"] == business
-    today = dtf["ENTLIN"] == dt.date.today()
+    today = dtf["ENTLIN"] == date.today()
     try:
         first = dtf[wheblue & today].iloc[-1]["PRECIO"]
     except IndexError:
@@ -172,7 +168,7 @@ def differential(dtf,business):
     second = None
     max_days_back = 50 
     for i in range(1, max_days_back + 1):
-        target_date = dt.date.today() - dt.timedelta(days=i)
+        target_date = date.today() - timedelta(days=i)
         mask = wheblue & (dtf["ENTLIN"] == target_date)
         if not dtf[mask].empty:
             second = dtf[mask].iloc[-1]["PRECIO"]
@@ -195,10 +191,10 @@ def predecir_futuro(modelo, datos,scaler, pasos=30):
         pred = modelo.predict(secuencia, verbose=0)[0][0]
         predicciones.append(pred)
         
-        nueva_secuencia = np.append(secuencia[0][1:], [[pred]], axis=0)
+        nueva_secuencia = append(secuencia[0][1:], [[pred]], axis=0)
         secuencia = nueva_secuencia.reshape(1, pasos, 1)
         
-    predicciones_desescaladas = scaler.inverse_transform(np.array(predicciones).reshape(-1, 1))
+    predicciones_desescaladas = scaler.inverse_transform(array(predicciones).reshape(-1, 1))
     return predicciones_desescaladas
 
 #Clean the dataframe and make the rpediction based on the model that is chosen by the user
@@ -227,13 +223,13 @@ def miqueas(dtf,chosen):
     real_and_pred['PRECIO'] = real_and_pred['PRECIO'].astype(float)
     real_and_pred.dropna(subset=["PRECIO"], inplace=True)
 
-    fig = go.Figure()
+    fig = Figure()
 
     #To make the plot work we MUST convert the dataframe columns to a list, because the json file not accept objects as pandas dataframes or numpy arrays
     for tipo in real_and_pred['TIPO'].unique():
         df_filtrado = real_and_pred[real_and_pred['TIPO'] == tipo]
 
-        fig.add_trace(go.Scatter(
+        fig.add_trace(Scatter(
             x=df_filtrado['FECHA'].tolist(),
             y=df_filtrado['PRECIO'].tolist(),
             mode='lines',
@@ -247,7 +243,7 @@ def miqueas(dtf,chosen):
         yaxis_title='PRECIO',
     )
  
-    graph_json = pio.to_json(fig)
+    graph_json = to_json(fig)
  
     return graph_json
 
@@ -255,7 +251,7 @@ def miqueas(dtf,chosen):
 def basicalizer(text):
     stop_words = set(stopwords.words("english"))
     text = text.lower()
-    text = re.sub(r'[^a-z\s]', '', text)
+    text = sub(r'[^a-z\s]', '', text)
     words = word_tokenize(text)
     words = [w for w in words if w not in stop_words]
     words = [PorterStemmer().stem(w) for w in words]
