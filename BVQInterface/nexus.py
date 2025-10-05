@@ -2,8 +2,6 @@
 
 import datetime as dt
 import pandas as pd
-import os
-from openpyxl import load_workbook
 
 #****************************************************************************************************************
 #The names of the business that we have in the historic csv
@@ -33,17 +31,23 @@ business= ['BANCO GUAYAQUIL S.A.', 'MUTUALISTA PICHINCHA',
        'LA ESTANCIA FORESTAL FORESTEAD S A', 'VERDETEKA','ALICOSTA BK HOLDING S A', 'EDUCACION Y FUTURO TEKAFUTURO SA']
 
 #Ask for the current date and initialize different list that will help us in the processing process
-day_today= str(dt.datetime.today())[:10]
+day_today= str(dt.datetime.today())[:10]  #
 today= dt.date.today()
 print(day_today)
-oscu= [] #Contains all the paths 
-monalisa= [] #Contains all the names of business of the daily scrap in the web
-level= {}
+#******This lines only worked when it was done for the first time******************
+#oscu= [] #Contains all the paths 
+#monalisa= [] #Contains all the names of business of the daily scrap in the web
 today= dt.date.today()
-daily_names= ['PRODUBANCO S.A.','INVERSANCARLOS S.A. USD 1,00', 'CORPORACION  FAVORITA C.A', 'BANCO DE GUAYAQUIL USD 1', 'SOC.AG.IND.SAN CARLOS US D  1', 'CONCLINA C.A. ORDINARIA D  1', 'BANCO PICHINCHA CA D 100.00', 'BOLSA DE VALORES DE QUITO', 'PRODUBANCO S.A.', 'CERVECERIA NACIONAL CN S.A.', 'HOLCIM ECUADOR S.A.D 3', 'BEVERAGE BRAND &PATENTS COMP B', 'FONDO INV COTIZADO FIDUCIA', 'BANCO BOLIVARIANO USD 1,00', 'BOLSA DE VALORES DE GUAYAQUIL', 'ASOCIACION MUT.PICHINCHA']
+daily_names= ['PRODUBANCO S.A.','INVERSANCARLOS S.A. USD 1,00', 
+              'CORPORACION  FAVORITA C.A', 'BANCO DE GUAYAQUIL USD 1', 
+              'SOC.AG.IND.SAN CARLOS US D  1', 'CONCLINA C.A. ORDINARIA D  1', 
+              'BANCO PICHINCHA CA D 100.00', 'BOLSA DE VALORES DE QUITO', 
+              'PRODUBANCO S.A.', 'CERVECERIA NACIONAL CN S.A.', 
+              'HOLCIM ECUADOR S.A.D 3', 'BEVERAGE BRAND &PATENTS COMP B', 
+              'FONDO INV COTIZADO FIDUCIA', 'BANCO BOLIVARIANO USD 1,00', 
+              'BOLSA DE VALORES DE GUAYAQUIL', 'ASOCIACION MUT.PICHINCHA']
 level = {}
-file_path = "D:\\DocumentosI\\NGE\\NGE3.0+1.0\\The grid\\acciones180425.xlsx"
-sheet_name = "2025"
+file_path = "Data\\AccionesFinal.csv"
 
 #****************************************************************************************************************
 
@@ -53,7 +57,7 @@ def limpiar(nombre):
     return set([word for word in nombre.split() if word not in irrelevantes])
 
 #Read the current csv file with the names
-daily= pd.read_csv(f"D:\\DocumentosI\\NGE\\NGE3.0+1.0\\The grid\\Data\\operaciones-cerradas{day_today}.csv")
+daily= pd.read_csv(f"operaciones-cerradas{day_today}.csv")
 #daily= pd.read_csv(f"D:\\DocumentosI\\NGE\\NGE3.0+1.0\\The grid\\Data\\operaciones-cerradas2025-03-28.csv")
 
 #****************************************************************************************************************
@@ -74,7 +78,7 @@ daily= pd.read_csv(f"D:\\DocumentosI\\NGE\\NGE3.0+1.0\\The grid\\Data\\operacion
 #****************************************************************************************************************
 
 def nexxus():
-    daily= pd.read_csv(f"D:\\DocumentosI\\NGE\\NGE3.0+1.0\\The grid\\Data\\operaciones-cerradas{day_today}.csv")
+    daily= pd.read_csv(f"operaciones-cerradas{day_today}.csv")
     #Verify if there is a new name that is not in the main list
     for j in daily["Emisor"].unique():
         if j in daily_names:
@@ -100,18 +104,24 @@ def nexxus():
                 if len(interseccion) >= 3:
                     level[daily_names[j]] = business[i]
 
-    level['PRODUBANCO S.A.'] = 'BANCO DE LA PRODUCCION S.A . PRODUBANCO'
-    level["SOC.AG.IND.SAN CARLOS US D  1"] = 'SAN CARLOS SOC. AGR. IND.'
-    level["CONCLINA PREFERIDA 2500 SERIEA"] = 'CONCLINA C A  CIA CONJU CLINICO NACIONAL'
-    level["FONDO INV COTIZADO FIDUCIA"]= "FONDO INV COTIZADO FIDUCIA"
-    level["CONCLINA PREFERIDASD  1SERIEB"] = 'CONCLINA C A  CIA CONJU CLINICO NACIONAL'
-    level['CONCLINA C.A. ORDINARIA D  1']= 'CONCLINA C A  CIA CONJU CLINICO NACIONAL'
-    level['INVERSANCARLOS S.A. USD 1,00']= 'INVERSANCARLOS'
-    level['ASOCIACION MUT.PICHINCHA']= 'MUTUALISTA PICHINCHA'
-    level['FID HOTEL CIUDAD DEL RIO'] = 'FID HOTEL CIUDAD DEL RIO'
-    level['FONDO INV COLEC B RAICES UIO 2']= 'FONDO INV COLEC B RAICES UIO'
-    level['BRIKAPITAL S.A'] = 'BRIKAPITAL SA'
-    level['CORPETROLSA S.A'] = 'CORPETROLSA S.A'
+    datos = {
+            'PRODUBANCO S.A.': 'BANCO DE LA PRODUCCION S.A . PRODUBANCO',
+            "SOC.AG.IND.SAN CARLOS US D  1": 'SAN CARLOS SOC. AGR. IND.',
+            "CONCLINA PREFERIDA 2500 SERIEA": 'CONCLINA C A  CIA CONJU CLINICO NACIONAL',
+            "FONDO INV COTIZADO FIDUCIA": "FONDO INV COTIZADO FIDUCIA",
+            "CONCLINA PREFERIDASD  1SERIEB": 'CONCLINA C A  CIA CONJU CLINICO NACIONAL',
+            'CONCLINA C.A. ORDINARIA D  1': 'CONCLINA C A  CIA CONJU CLINICO NACIONAL',
+            'INVERSANCARLOS S.A. USD 1,00': 'INVERSANCARLOS',
+            'ASOCIACION MUT.PICHINCHA': 'MUTUALISTA PICHINCHA',
+            'FID HOTEL CIUDAD DEL RIO': 'FID HOTEL CIUDAD DEL RIO',
+            'FONDO INV COLEC B RAICES UIO 2': 'FONDO INV COLEC B RAICES UIO',
+            'BRIKAPITAL S.A': 'BRIKAPITAL SA',
+            'CORPETROLSA S.A': 'CORPETROLSA S.A'
+            }
+
+    # Agregar a level con un bucle
+    for clave, valor in datos.items():
+        level[clave] = valor
 
     for i in daily["Emisor"].unique():
         daily.replace({i:level[i]},inplace=True) 
@@ -119,8 +129,8 @@ def nexxus():
     #******************************************************************************************
     #Create and manipulate columns of the daily dataframe to concat this one to the historic dataframe
 
-    dates= [f"{today.strftime("%d/%m/%Y")}" for i in range(len(daily))]
-    zeroes= [0 for i in range(len(daily))]
+    dates= [f"{today.strftime("%d/%m/%Y")}" for _ in range(len(daily))]
+    zeroes= [0 for _ in range(len(daily))]
     daily.drop("Hora Cierre",axis=1,inplace=True)
     daily.insert(0,"FECHA",dates)
     daily.insert(7,"PROCEDENCIA",zeroes)
@@ -128,21 +138,8 @@ def nexxus():
     daily= daily.reindex(columns=['FECHA', 'EMISOR', 'VALOR', 'VALOR NOMINAL', 'PRECIO','NUMERO ACCIONES', 'VALOR EFECTIVO', 'PROCEDENCIA','CASA VENDEDORA','CASA COMPRADORA'])
     daily.insert(0,"Unnamed",zeroes)
 
-
-    #Append the new data to the main xlsx file
-    book = load_workbook(file_path)
-    if sheet_name in book.sheetnames:
-        sheet = book[sheet_name]
-        last_row = sheet.max_row
-    else:
-        last_row = 0  
-
-    with pd.ExcelWriter(
-        file_path,
-        engine='openpyxl',
-        mode='a',
-        if_sheet_exists='overlay'
-    ) as writer:
-        daily.to_excel(writer, sheet_name=sheet_name, startrow=last_row, index=False, header=False)
+    #Append the new data to the main csv file
+    daily.to_csv(file_path,mode="a",header=False)
+    print("Datos agregados exitosamente a AccionesFinal.csv")
 
 nexxus()

@@ -8,7 +8,7 @@ from selenium.webdriver.common.by import By
 def scraping():
 
 
-    download_dir = "D:\\DocumentosI\\NGE\\NGE3.0+1.0\\The grid\\Data"
+    download_dir = "Data"
     NEW_ONE= "https://www.bolsadequito.com/index.php/mercados-bursatiles/mercado-en-linea/operaciones-cerradas"
     new_name= "operaciones-cerradas" + str(date.today()) + ".csv"
 
