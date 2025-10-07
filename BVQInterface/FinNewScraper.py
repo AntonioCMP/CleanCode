@@ -1,12 +1,12 @@
 
-import requests
-import pandas as pd
+from requests import get
+from pandas import DataFrame
 
-data = requests.get(f'https://newsdata.io/api/1/latest?apikey=pub_95c015f2a639418ba2a0e404a9bc344d&q=ecuador&country=ec&category=business')
+data = get(f'https://newsdata.io/api/1/latest?apikey=pub_95c015f2a639418ba2a0e404a9bc344d&q=ecuador&country=ec&category=business')
 data = data.json()
 
 if data["status"] != "error":
-    df = pd.DataFrame(data["results"])
+    df = DataFrame(data["results"])
     df.drop(columns=[
         "keywords","content","image_url","video_url","source_icon",
         "language","country","sentiment","sentiment_stats","ai_tag",
