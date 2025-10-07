@@ -1,12 +1,8 @@
 
 from flask import Flask, render_template
 from data_functions import *
-from fin_news_scraper import news_scrap
 import time
-import requests
-import pandas as pd
 from dotenv import load_dotenv
-import os
 from googletrans import Translator
 
 news_cache = {
@@ -17,9 +13,9 @@ news_cache = {
 CACHE_DURATION_SECONDS = 1800 
 
 load_dotenv("tokens.env")
-API_KEY = os.getenv("API_KEY")
-SECRETS = os.getenv("SECRETS")
-ROUTE_API = os.getenv("ROUTE_API")
+API_KEY ="" #os.getenv("API_KEY")
+SECRETS = ""#os.getenv("SECRETS")
+ROUTE_API ="" #os.getenv("ROUTE_API")
 
 translator = Translator()
 
@@ -28,8 +24,8 @@ def get_latest_news_and_sentiment():
     if news_cache["data"] is None or news_cache["data"].empty or (current_time - news_cache["last_fetched"]) > CACHE_DURATION_SECONDS:
         print("Caché de noticias expirado o vacío. Obteniendo nuevos datos...")
 
-        df_news = news_scrap()
-        if not df_news.empty:
+        df_news = "" #news_scrap()
+        if not df_news == "":
             images, numy = analizar_sentimiento_noticias(df_news)
             
             news_cache["data"] = df_news
