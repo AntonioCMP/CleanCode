@@ -12,18 +12,21 @@ from nltk.stem.porter import PorterStemmer
 from nltk.tokenize import word_tokenize
 from re import sub
 from os import environ
+
+#To avoid the annoying warning related to that environ
+environ["TF_ENABLE_ONEDNN_OPTS"]="0"
+environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 
-#To avoid the annoying warning related to that environ
-environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
 
 #Initialize the dataframe and clean all the columns and rows that no have information
 def genesis():
     """"Function that reads the ultimate version of the data and"""
     """Clean it converting to datetype objects the columns of the dataframe"""
 
-    dtf= pd.read_csv("Data\\AccionesFinal.csv",delimiter=",")
+    dtf= pd.read_csv("..\\Data\\AccionesFinal.csv",delimiter=",")
     dtf["FECHA"] = pd.to_datetime(dtf["FECHA"], errors="coerce",format="%Y-%m-%d")
     dtf["PRECIO"]=dtf["PRECIO"].map(lambda x: x.replace(",", "") if  "," in x else x)
     dtf["PRECIO"] = pd.to_numeric(dtf["PRECIO"])
@@ -120,7 +123,9 @@ def differential(dtf,business):
     """to the today's prices"""
 
     chosen_business = dtf["EMISOR"] == business
-    today = dtf["FECHA"].max()
+    today = dtf["FECHA"] == dtf["FECHA"].max()
+    nowaday= dtf["FECHA"].max()
+
     try:
         first = dtf[chosen_business & today].iloc[-1]["PRECIO"]
     except IndexError:
@@ -130,7 +135,7 @@ def differential(dtf,business):
 
     max_days_back = 50 
     for i in range(1, max_days_back + 1):
-        target_date = today - timedelta(days=i)
+        target_date = nowaday - timedelta(days=i)
         mask = chosen_business & (dtf["FECHA"] == target_date)
         if not dtf[mask].empty:
             second = dtf[mask].iloc[-1]["PRECIO"]
@@ -171,7 +176,7 @@ def miqueas(dtf,chosen):
     """Create a dataframe that contains the Date, Price and the type (Prediction)"""
     """Create a plotly figure with a remarkable difference between the real data and predictions"""
 
-    model = load_model(f"Models\\{chosen}_LSTM_model.h5")
+    model = load_model(f"..\\Models&Pickle\\{chosen}_LSTM_model.h5")
 
     scaler=MinMaxScaler()
 
