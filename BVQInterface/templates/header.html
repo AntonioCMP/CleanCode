@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+        />
+        <style>
+            .navbar-custom {
+              position: relative;
+              z-index: 1050; 
+            }
+
+            .navbar-custom .dropdown-menu {
+              z-index: 1060; 
+            }
+
+          .navbar-custom {
+            background: linear-gradient(to left, #70a2bd, #373737);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            border-bottom: 2px solid #3c3c3c;
+            transition: background-color 0.3s ease;
+          }
+      
+          .navbar-custom .nav-link, .navbar-custom .navbar-brand {
+            color: white !important;
+            transition: color 0.3s ease;
+          }
+      
+          .navbar-custom .nav-link:hover {
+            color: #f0e68c !important;
+            transform: scale(1.05);
+          }
+      
+          .navbar-custom .dropdown-menu {
+            background-color: #5a859d;
+            border-radius: 10px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+          }
+      
+          .navbar-custom .dropdown-item {
+            color: white !important;
+            transition: background-color 0.3s ease;
+          }
+      
+          .navbar-custom .dropdown-item:hover {
+            background-color: #5149b8;
+            color: #f0e68c !important;
+          }
+      
+          .navbar-scrolled {
+            background-color: #2b2b2b !important;
+          }
+      
+          .navbar-brand img {
+            transition: transform 0.3s ease;
+          }
+      
+          .navbar-brand img:hover {
+            transform: rotate(8deg) scale(1.1);
+
+        .animate__animated.animate__bounce {
+        --animate-duration: 2s;
+        }
+          }
+        </style>
+      </head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/" style="font-size: 0.6cm;">
+                <img src="/static/Kitten.jpg" style="border-radius: 8%;" alt="Logo" width="40" height="34" class="d-inline-block align-text-top">
+                Analisis de la BVQ
+            </a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+              
+                <a class="navbar-brand" href="/infogeneral" style="font-size: medium;padding-left: 20px; padding-right: 8px;">
+                      Info. General 
+                </a>
+            
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Precio de Empresas
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="/plot_in_time/PRECIO/CORPORACION FAVORITA C.A.">Corporación Favorita</a></li>
+                                <li><a class="dropdown-item" href="/plot_in_time/PRECIO/MUTUALISTA PICHINCHA">Mutualista Pichincha</a></li>
+                                <li><a class="dropdown-item" href="/plot_in_time/PRECIO/BANCO GUAYAQUIL S.A.">Banco Guayaquil</a></li>
+                                <li><a class="dropdown-item" href="/plot_in_time/PRECIO/BANCO PICHINCHA C.A.">Banco Pichincha</a></li>
+                                <li><a class="dropdown-item" href="/plot_in_time/PRECIO/CERVECERIA NACIONAL CN S A">Cerveceria Nacional</a></li>
+                                <li><a class="dropdown-item" href="/plot_in_time/PRECIO/BANCO DE LA PRODUCCION S.A . PRODUBANCO">Produbanco</a></li>
+                                <li><a class="dropdown-item" href="/plot_in_time/PRECIO/HOLCIM ECUADOR S.A.">Holcim</a></li>
+                                <li><a class="dropdown-item" href="/plot_in_time/PRECIO/CONCLINA C A  CIA CONJU CLINICO NACIONAL">Conclina</a></li>
+                                <li><a class="dropdown-item" href="/plot_in_time/PRECIO/SAN CARLOS SOC. AGR. IND.">San Carlos</a></li>
+                                <li><a class="dropdown-item" href="/plot_in_time/PRECIO/BRIKAPITAL SA">Brikapital</a></li>
+                                <li><a class="dropdown-item" href="/plot_in_time/PRECIO/INDUSTRIAS ALES">Ales</a></li>
+                                
+                            </ul>
+                        </li>
+                    </ul>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav" >
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Valor efectivo de Empresas
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="/plot_in_time/VALOR EFECTIVO/CORPORACION FAVORITA C.A.">Corporación Favorita</a></li>
+                            <li><a class="dropdown-item" href="/plot_in_time/VALOR EFECTIVO/MUTUALISTA PICHINCHA">Mutualista Pichincha</a></li>
+                            <li><a class="dropdown-item" href="/plot_in_time/VALOR EFECTIVO/BANCO GUAYAQUIL S.A.">Banco Guayaquil</a></li>
+                            <li><a class="dropdown-item" href="/plot_in_time/VALOR EFECTIVO/BANCO PICHINCHA C.A.">Banco Pichincha</a></li>
+                            <li><a class="dropdown-item" href="/plot_in_time/VALOR EFECTIVO/CERVECERIA NACIONAL CN S A">Cerveceria Nacional</a></li>
+                            <li><a class="dropdown-item" href="/plot_in_time/VALOR EFECTIVO/BANCO DE LA PRODUCCION S.A . PRODUBANCO">Produbanco</a></li>
+                            <li><a class="dropdown-item" href="/plot_in_time/VALOR EFECTIVO/HOLCIM ECUADOR S.A.">Holcim</a></li>
+                            <li><a class="dropdown-item" href="/plot_in_time/VALOR EFECTIVO/CONCLINA C A  CIA CONJU CLINICO NACIONAL">Conclina</a></li>
+                            <li><a class="dropdown-item" href="/plot_in_time/VALOR EFECTIVO/SAN CARLOS SOC. AGR. IND.">San Carlos</a></li>
+                            <li><a class="dropdown-item" href="/plot_in_time/VALOR EFECTIVO/BRIKAPITAL SA">Brikapital</a></li>
+                            <li><a class="dropdown-item" href="/plot_in_time/VALOR EFECTIVO/INDUSTRIAS ALES">Ales</a></li>
+                            
+                        </ul>
+                    </li>
+                </ul>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarNav" >
+            <ul class="navbar-nav">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        # Acciones de Empresas
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/plot_in_time/NUMERO ACCIONES/CORPORACION FAVORITA C.A.">Corporación Favorita</a></li>
+                        <li><a class="dropdown-item" href="/plot_in_time/NUMERO ACCIONES/MUTUALISTA PICHINCHA">Mutualista Pichincha</a></li>
+                        <li><a class="dropdown-item" href="/plot_in_time/NUMERO ACCIONES/BANCO GUAYAQUIL S.A.">Banco Guayaquil</a></li>
+                        <li><a class="dropdown-item" href="/plot_in_time/NUMERO ACCIONES/BANCO PICHINCHA C.A.">Banco Pichincha</a></li>
+                        <li><a class="dropdown-item" href="/plot_in_time/NUMERO ACCIONES/CERVECERIA NACIONAL CN S A">Cerveceria Nacional</a></li>
+                        <li><a class="dropdown-item" href="/plot_in_time/NUMERO ACCIONES/BANCO DE LA PRODUCCION S.A . PRODUBANCO">Produbanco</a></li>
+                        <li><a class="dropdown-item" href="/plot_in_time/NUMERO ACCIONES/HOLCIM ECUADOR S.A.">Holcim</a></li>
+                        <li><a class="dropdown-item" href="/plot_in_time/NUMERO ACCIONES/CONCLINA C A  CIA CONJU CLINICO NACIONAL">Conclina</a></li>
+                        <li><a class="dropdown-item" href="/plot_in_time/NUMERO ACCIONES/SAN CARLOS SOC. AGR. IND.">San Carlos</a></li>
+                        <li><a class="dropdown-item" href="/plot_in_time/NUMERO ACCIONES/BRIKAPITAL SA">Brikapital</a></li>
+                        <li><a class="dropdown-item" href="/plot_in_time/NUMERO ACCIONES/INDUSTRIAS ALES">Ales</a></li>
+                        
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav" >
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Predicciones
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/prediction/CORPORACION FAVORITA C.A.">Corporación Favorita</a></li>
+                        <li><a class="dropdown-item" href="/prediction/MUTUALISTA PICHINCHA">Mutualista Pichincha</a></li>
+                        <li><a class="dropdown-item" href="/prediction/BANCO GUAYAQUIL S.A.">Banco Guayaquil</a></li>
+                        <li><a class="dropdown-item" href="/prediction/BANCO PICHINCHA C.A.">Banco Pichincha</a></li>
+                        <li><a class="dropdown-item" href="/prediction/CERVECERIA NACIONAL CN S A">Cerveceria Nacional</a></li>
+                        <li><a class="dropdown-item" href="/prediction/BANCO DE LA PRODUCCION S.A . PRODUBANCO">Produbanco</a></li>
+                        <li><a class="dropdown-item" href="/prediction/HOLCIM ECUADOR S.A.">Holcim</a></li>
+                        <li><a class="dropdown-item" href="/prediction/CONCLINA C A  CIA CONJU CLINICO NACIONAL">Conclina</a></li>
+                        <li><a class="dropdown-item" href="/prediction/SAN CARLOS SOC. AGR. IND.">San Carlos</a></li>
+                        <li><a class="dropdown-item" href="/prediction/BRIKAPITAL SA">Brikapital</a></li>
+                        <li><a class="dropdown-item" href="/prediction/INDUSTRIAS ALES">Ales</a></li>
+                        
+                    </ul>
+                </li>
+            </ul>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav" >
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Predicciones con IA
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/LSTM_prediction/CORPORACION FAVORITA C.A.">Corporación Favorita</a></li>
+                        <li><a class="dropdown-item" href="/LSTM_prediction/MUTUALISTA PICHINCHA">Mutualista Pichincha</a></li>
+                        <li><a class="dropdown-item" href="/LSTM_prediction/BANCO GUAYAQUIL S.A.">Banco Guayaquil</a></li>
+                        <li><a class="dropdown-item" href="/LSTM_prediction/BANCO PICHINCHA C.A.">Banco Pichincha</a></li>
+                        <li><a class="dropdown-item" href="/LSTM_prediction/CERVECERIA NACIONAL CN S A">Cerveceria Nacional</a></li>
+                        <li><a class="dropdown-item" href="/LSTM_prediction/BANCO DE LA PRODUCCION S.A . PRODUBANCO">Produbanco</a></li>
+                        <li><a class="dropdown-item" href="/LSTM_prediction/HOLCIM ECUADOR S.A.">Holcim</a></li>
+                        <li><a class="dropdown-item" href="/LSTM_prediction/SAN CARLOS SOC. AGR. IND.">San Carlos</a></li>
+                        <li><a class="dropdown-item" href="/LSTM_prediction/BRIKAPITAL SA">Brikapital</a></li>
+                        <li><a class="dropdown-item" href="/LSTM_prediction/INDUSTRIAS ALES">Ales</a></li>
+                        
+                    </ul>
+                </li>
+            </ul>
+    </div>
+               </div>
+        </div>
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+</body>
+<script>
+    // Efecto scroll para cambiar fondo del navbar
+    window.addEventListener('scroll', function() {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 50) {
+        navbar.classList.add('navbar-scrolled');
+      } else {
+        navbar.classList.remove('navbar-scrolled');
+      }
+    });
+  
+    // Resaltar el ítem activo del navbar
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', function() {
+        document.querySelectorAll('.nav-link').forEach(nav => nav.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  
+    // Animación suave para desplegar los dropdowns
+    document.querySelectorAll('.dropdown').forEach(drop => {
+      drop.addEventListener('mouseover', () => {
+        const menu = drop.querySelector('.dropdown-menu');
+        if (menu) {
+          menu.classList.add('show');
+        }
+      });
+      drop.addEventListener('mouseleave', () => {
+        const menu = drop.querySelector('.dropdown-menu');
+        if (menu) {
+          menu.classList.remove('show');
+        }
+      });
+    });
+  </script>
+  
+</html>
